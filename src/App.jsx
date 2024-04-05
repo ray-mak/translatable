@@ -4,7 +4,10 @@ import { faRightLong } from '@fortawesome/free-solid-svg-icons'
 import microphoneWhite from "/microphone-white.svg"
 import microphoneOrange from "/microphone-orange.svg"
 import { useState, useEffect, useRef } from "react"
+<<<<<<< HEAD
 import { OpenAI } from "openai"
+=======
+>>>>>>> 7656a8484979df2d589e0dc5bf8d10f8e42ce41e
 
 function App() {
   const [listening, setListening] = useState(false)
@@ -16,6 +19,7 @@ function App() {
   recognition.continuous = false
   recognition.interimResults = true
   recognition.lang = "en-US"
+<<<<<<< HEAD
   
   console.log(transcript)
 
@@ -58,6 +62,13 @@ function App() {
     } 
   }, [transcript])
 
+=======
+  recognition.onerror = (e) => {
+    console.error(e.error)
+    setError("Error occurred in recognition: " + e.error)
+  }
+  
+>>>>>>> 7656a8484979df2d589e0dc5bf8d10f8e42ce41e
   const englishText = transcript.map((text, index) => {
     if (text !== "") {
       return <div className="text-container" key={index}>
@@ -85,7 +96,11 @@ function App() {
       }
     }
     function handleEnd() {
+<<<<<<< HEAD
       // console.log("recognition ended")
+=======
+      console.log("recognition ended")
+>>>>>>> 7656a8484979df2d589e0dc5bf8d10f8e42ce41e
       if (listening) {
         recognition.start()
       }
@@ -95,9 +110,13 @@ function App() {
     recognition.addEventListener('end', handleEnd)
 
     return () => {
+<<<<<<< HEAD
       if (tempScript.length > 0) {
         setTranscript(prevScript => [...prevScript, tempScript.join(", ")])
       }
+=======
+      setTranscript(prevScript => [...prevScript, tempScript.join(", ")])
+>>>>>>> 7656a8484979df2d589e0dc5bf8d10f8e42ce41e
       recognition.removeEventListener('result', handleResult)
       recognition.removeEventListener('end', handleEnd)
     }
