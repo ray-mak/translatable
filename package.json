@@ -15,16 +15,12 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
-<<<<<<< HEAD
     "dotenv": "^16.4.5",
     "openai": "^4.32.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-spinners": "^0.13.8",
     "uuid": "^9.0.1"
-=======
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
->>>>>>> 7656a8484979df2d589e0dc5bf8d10f8e42ce41e
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

@@ -1,8 +1,10 @@
-# React + Vite
+# Translatable
+My first portfolio project, Translatable, an app designed to transcribe English and translate it to the desired language.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+First commit - styled the page and created a listening state. Added a little functionality to it and some animations to the button when listening.
 
-Currently, two official plugins are available:
+Second commit - added speech recognition with Web Speech API. Implemented useEffect to store speech in a transcript variable, which gets rendered into the output container.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Third commit - added a translation API using openAI.
+
+Fourth commit - Show transcription and translation in the output container after translation. Also added loading spinners for when the user is recording and when message is translating
