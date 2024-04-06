@@ -7,18 +7,70 @@ import { useState, useEffect, useRef, CSSProperties } from "react"
 import { OpenAI } from "openai"
 import SyncLoader from "react-spinners/SyncLoader"
 import ScaleLoader from "react-spinners/ScaleLoader"
+import LanguageSelect from "./LanguageSelect"
 
 function App() {
   const [listening, setListening] = useState(false)
   const [transcript, setTranscript] = useState([])
   const [outputText, setOutputText] = useState([])
   const [loading, setLoading] = useState(false)
+  const [language, setLanguage] = useState("Select Language")
   const outputContainerRef = useRef(null)
+
+  
+  //toggle listening
+    
+  function toggleListening() {
+    if (listening) {
+        setListening(false)  
+    } else {
+      setListening(prevState => !prevState)
+    }
+  }
+
+  useEffect(() => {
+    if (listening) {
+      recognition.start()
+    } else {
+      recognition.stop()
+    }
+  }, [listening])
+
+  //set up voice recognition
+
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
   const recognition = new SpeechRecognition()
   recognition.continuous = false
   recognition.interimResults = true
   recognition.lang = "en-US"
+
+  useEffect(() => {
+    let tempScript = []
+    function handleResult(e) {
+      if (e.results[0].isFinal === true) {
+        tempScript.push(e.results[0][0].transcript)
+        console.log(tempScript)
+      }
+    }
+    function handleEnd() {
+      // console.log("recognition ended")
+      if (listening) {
+        recognition.start()
+      }
+    }
+
+    recognition.addEventListener('result', handleResult)
+    recognition.addEventListener('end', handleEnd)
+
+    return () => {
+      if (tempScript.length > 0) {
+        setTranscript(prevScript => [...prevScript, tempScript.join(", ")])
+        setLoading(true)
+      }
+      recognition.removeEventListener('result', handleResult)
+      recognition.removeEventListener('end', handleEnd)
+    }
+  }, [listening])
 
   //translate English to target language
   
@@ -65,6 +117,8 @@ function App() {
   //   } 
   // }, [transcript])
 
+  //map translations onto output container
+
   const translatedText = outputText.map((text, index) => {
       return <div className="text-container" key={index}>
       <p className="english-text">{text.transcript}</p>
@@ -72,50 +126,8 @@ function App() {
       <p className="translated-text">{text.translation}</p>
     </div>
   })
-  
-  function toggleListening() {
-    if (listening) {
-        setListening(false)  
-    } else {
-      setListening(prevState => !prevState)
-    }
-  }
 
-  useEffect(() => {
-    let tempScript = []
-    function handleResult(e) {
-      if (e.results[0].isFinal === true) {
-        tempScript.push(e.results[0][0].transcript)
-        console.log(tempScript)
-      }
-    }
-    function handleEnd() {
-      // console.log("recognition ended")
-      if (listening) {
-        recognition.start()
-      }
-    }
-
-    recognition.addEventListener('result', handleResult)
-    recognition.addEventListener('end', handleEnd)
-
-    return () => {
-      if (tempScript.length > 0) {
-        setTranscript(prevScript => [...prevScript, tempScript.join(", ")])
-        setLoading(true)
-      }
-      recognition.removeEventListener('result', handleResult)
-      recognition.removeEventListener('end', handleEnd)
-    }
-  }, [listening])
-
-  useEffect(() => {
-    if (listening) {
-      recognition.start()
-    } else {
-      recognition.stop()
-    }
-  }, [listening])
+  //scroll output container when new translation is added
 
   useEffect(() => {
     if (outputContainerRef.current) {
@@ -123,7 +135,11 @@ function App() {
     }
   }, [outputText])
 
-  
+  //Select country function
+
+  function selectLanguage(e) {
+    setLanguage(e.target.innerText)
+  }
 
   return (
     <div className="main-container">
@@ -132,12 +148,10 @@ function App() {
       <div className="selection-container">
         <p>English</p>
         <FontAwesomeIcon icon={faRightLong} />
-        <select>
-          <option value="chinese">Chinese</option>
-          <option value="spanish">Spanish</option>
-          <option value="french">French</option>
-          <option value="arabic">Arabic</option>
-        </select>
+        <LanguageSelect 
+          language={language}
+          handleClick={selectLanguage}
+        />
       </div>
       <div className="output-container" ref={outputContainerRef}>
         {loading && <SyncLoader 

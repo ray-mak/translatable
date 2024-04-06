@@ -108,7 +108,6 @@ select {
   border-radius: 30px;
 }
 
-
 ::-webkit-scrollbar-thumb {
   background-color: var(--gray);
   border-radius: 20px;
@@ -160,6 +159,80 @@ select {
   z-index: 2;
 }
 
+.select-container {
+  width: 240px;
+  position: relative;
+}
+
+.arrow-icon {
+  width: 10px
+}
+
+.select-btn, .options li {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+
+.select-btn {
+  height: 50px;
+  font-size: 1.125rem;
+  padding: 0 16px;
+  border-radius: 6px;
+  justify-content: space-between;
+  background-color: var(--white);
+}
+
+.content {
+  background-color: var(--white);
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 6px;
+  position: absolute;
+  box-shadow: 1px 1px 5px var(--gray);
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  width: 100%;
+  text-indent: 32px;
+  background-repeat: no-repeat;
+  background-position: 10px;
+  background-size: 16px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--gray);
+  font-size: 1.125rem;
+}
+
+.options {
+  margin-top: 12px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.options::-webkit-scrollbar {
+  width: 12px;
+}
+
+.options::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: 4px solid var(--white);
+}
+
+.options li {
+  height: 40px;
+  border-radius: 6px;
+  padding: 0 16px;
+  font-size: 1.125rem;
+}
+
+.options li:hover {
+  background-color: var(--light-gray);
+}
 
 @media screen and (max-width: 680px) {
   .main-container {
