@@ -21,10 +21,14 @@ function App() {
   //toggle listening
     
   function toggleListening() {
-    if (listening) {
+    if (language === "Select Language") {
+      alert("Please select a language")
+    } else  {
+      if (listening) {
         setListening(false)  
-    } else {
-      setListening(prevState => !prevState)
+      } else {
+        setListening(prevState => !prevState)
+      }
     }
   }
 
@@ -74,48 +78,48 @@ function App() {
 
   //translate English to target language
   
-  // useEffect(() => {
-  //   if (transcript.length > 0) {
-  //     async function translateText() {
-  //       try {
-  //         const text = transcript.slice(-1)
-  //         const openai = new OpenAI({
-  //           apiKey: import.meta.env.VITE_OPENAI_KEY,
-  //           dangerouslyAllowBrowser: true
-  //         })
-  //         const data = await openai.chat.completions.create({
-  //           model: "gpt-3.5-turbo",
-  //           messages: [
-  //             {
-  //               "role": "system",
-  //               "content": "You will be provided with a sentence in English, and your task is to translate it into Chinese."
-  //             },
-  //             {
-  //               "role": "user",
-  //               "content": `${text}`
-  //             }
-  //           ],
-  //           temperature: 0.7,
-  //           max_tokens: 64,
-  //           top_p: 1,
-  //         })
-  //         console.log(data)
-  //         console.log(data.choices[0].message.content)
-  //         const translation = data.choices[0].message.content
-  //         setOutputText(prevText => {
-  //           return [...prevText, {
-  //             "transcript" : text,
-  //             "translation" : translation
-  //           }]
-  //           setLoading(false)
-  //         })
-  //       } catch (error) {
-  //         console.error("Error occurred in translation: ", error)
-  //       }
-  //     }
-  //     translateText()
-  //   } 
-  // }, [transcript])
+  useEffect(() => {
+    if (transcript.length > 0) {
+      async function translateText() {
+        try {
+          const text = transcript.slice(-1)
+          const openai = new OpenAI({
+            apiKey: import.meta.env.VITE_OPENAI_KEY,
+            dangerouslyAllowBrowser: true
+          })
+          const data = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [
+              {
+                "role": "system",
+                "content": `You will be provided with a sentence in English, and your task is to translate it into ${language}.`
+              },
+              {
+                "role": "user",
+                "content": `${text}`
+              }
+            ],
+            temperature: 0.7,
+            max_tokens: 64,
+            top_p: 1,
+          })
+          console.log(data)
+          console.log(data.choices[0].message.content)
+          const translation = data.choices[0].message.content
+          setOutputText(prevText => {
+            setLoading(false)
+            return [...prevText, {
+              "transcript" : text,
+              "translation" : translation
+            }]
+          })
+        } catch (error) {
+          console.error("Error occurred in translation: ", error)
+        }
+      }
+      translateText()
+    } 
+  }, [transcript])
 
   //map translations onto output container
 

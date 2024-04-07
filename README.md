@@ -10,3 +10,5 @@ Third commit - added a translation API using openAI.
 Fourth commit - Show transcription and translation in the output container after translation. Also added loading spinners for when the user is recording and when message is translating
 
 Fifth commit - Added list of language and language search function for the dropdown. 
+
+Sixth commit - Integrated language search with app to allow API to translate to targetted language. Also updated css for mobile.

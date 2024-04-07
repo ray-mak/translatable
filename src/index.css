@@ -70,10 +70,10 @@ select {
   align-items: center;
   border-radius: 12px;
   box-shadow: 1px 1px 25px var(--gray);
-  margin-top: -50px;
+  margin-top: -60px;
   background-color: var(--white);
   overflow-y: auto;
-  padding-top: 2.5em;
+  padding-top: 2.75em;
   padding-bottom: 1em;
   gap: 1em;
 }
@@ -232,6 +232,34 @@ select {
 
 .options li:hover {
   background-color: var(--light-gray);
+}
+
+@media screen and (max-width: 380px) {
+  .select-container {
+    width: 100px
+  }
+
+  .selection-container {
+    padding: .75em
+  }
+
+  .selection-container > p {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .select-container {
+    width: 180px
+  }
+
+  .selection-container > p, .select-btn, .options > li, .search input {
+    font-size: 1rem;
+  }
+
+  .select-btn {
+    height: 40px
+  }
 }
 
 @media screen and (max-width: 680px) {
