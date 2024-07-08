@@ -8,6 +8,7 @@ import { OpenAI } from "openai"
 import SyncLoader from "react-spinners/SyncLoader"
 import ScaleLoader from "react-spinners/ScaleLoader"
 import LanguageSelect from "./LanguageSelect"
+import LanguageInput from "./LanguageInput"
 
 function App() {
   const [listening, setListening] = useState(false)
@@ -15,17 +16,19 @@ function App() {
   const [outputText, setOutputText] = useState([])
   const [loading, setLoading] = useState(false)
   const [language, setLanguage] = useState("Select Language")
+  const [inputLanguage, setInputLanguage] = useState("Select Language")
+  const [inputLanguageCode, setInputLanguageCode] = useState("")
   const outputContainerRef = useRef(null)
 
-  
+
   //toggle listening
-    
+
   function toggleListening() {
     if (language === "Select Language") {
       alert("Please select a language")
-    } else  {
+    } else {
       if (listening) {
-        setListening(false)  
+        setListening(false)
       } else {
         setListening(prevState => !prevState)
       }
@@ -77,7 +80,7 @@ function App() {
   }, [listening])
 
   //translate English to target language
-  
+
   useEffect(() => {
     if (transcript.length > 0) {
       async function translateText() {
@@ -109,8 +112,8 @@ function App() {
           setOutputText(prevText => {
             setLoading(false)
             return [...prevText, {
-              "transcript" : text,
-              "translation" : translation
+              "transcript": text,
+              "translation": translation
             }]
           })
         } catch (error) {
@@ -118,13 +121,13 @@ function App() {
         }
       }
       translateText()
-    } 
+    }
   }, [transcript])
 
   //map translations onto output container
 
   const translatedText = outputText.map((text, index) => {
-      return <div className="text-container" key={index}>
+    return <div className="text-container" key={index}>
       <p className="english-text">{text.transcript}</p>
       <div className="divider"></div>
       <p className="translated-text">{text.translation}</p>
@@ -145,20 +148,33 @@ function App() {
     setLanguage(e.target.innerText)
   }
 
+  function selectInputLanguage(e) {
+    setInputLanguage(e.target.innerText)
+  }
+
+  function selectInputLanguageCode(languageCode) {
+    setInputLanguageCode(languageCode)
+  }
+
   return (
     <div className="main-container">
       <h1>Translatable</h1>
       <p>Transcribe and translate English to another language</p>
       <div className="selection-container">
-        <p>English</p>
+        {/* <p>English</p> */}
+        <LanguageInput
+          language={inputLanguage}
+          selectInputLanguage={selectInputLanguage}
+          selectInputLanguageCode={selectInputLanguageCode}
+        />
         <FontAwesomeIcon icon={faRightLong} />
-        <LanguageSelect 
+        <LanguageSelect
           language={language}
           handleClick={selectLanguage}
         />
       </div>
       <div className="output-container" ref={outputContainerRef}>
-        {loading && <SyncLoader 
+        {loading && <SyncLoader
           color="#fca311"
           style={{
             position: "absolute",
@@ -167,22 +183,22 @@ function App() {
         />}
         {translatedText}
       </div>
-      
+
       <div className="button-container">
         {listening && <ScaleLoader
-          color="#fca311" 
+          color="#fca311"
           style={{
             position: "absolute",
             top: "-80px",
             left: "8px"
           }}
         />}
-        {listening &&<p className="listening">Listening...</p>}      
+        {listening && <p className="listening">Listening...</p>}
         <button className="record-btn" type="button" aria-label="record audio" onClick={toggleListening}></button>
-        {!listening && <img className="microphone" src={microphoneWhite} alt="white microphone icon"/>}
-        {listening && <img className="microphone" src={microphoneOrange} alt="orange microphone icon"/>}
+        {!listening && <img className="microphone" src={microphoneWhite} alt="white microphone icon" />}
+        {listening && <img className="microphone" src={microphoneOrange} alt="orange microphone icon" />}
       </div>
-      
+
     </div>
   )
 }

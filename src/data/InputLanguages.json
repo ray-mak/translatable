@@ -1,0 +1,138 @@
+[
+    {
+        "language": "Afrikaans",
+        "languageCode": "af-ZA"
+    },
+    {
+        "language": "Indonesian",
+        "languageCode": "id-ID"
+    },
+    {
+        "language": "Malay",
+        "languageCode": "ms-MY"
+    },
+    {
+        "language": "Catalan",
+        "languageCode": "ca-ES"
+    },
+    {
+        "language": "Czech",
+        "languageCode": "cs-CZ"
+    },
+    {
+        "language": "German",
+        "languageCode": "de-DE"
+    },
+    {
+        "language": "English",
+        "languageCode": "en-US"
+    },
+    {
+        "language": "Spanish",
+        "languageCode": "es-ES"
+    },
+    {
+        "language": "Basque",
+        "languageCode": "eu-ES"
+    },
+    {
+        "language": "French",
+        "languageCode": "fr-FR"
+    },
+    {
+        "language": "Galician",
+        "languageCode": "gl-ES"
+    },
+    {
+        "language": "Croatian",
+        "languageCode": "hr_HR"
+    },
+    {
+        "language": "Zulu",
+        "languageCode": "zu-ZA"
+    },
+    {
+        "language": "Icelandic",
+        "languageCode": "is-IS"
+    },
+    {
+        "language": "Italian",
+        "languageCode": "it-IT"
+    },
+    {
+        "language": "Hungarian",
+        "languageCode": "hu-HU"
+    },
+    {
+        "language": "Dutch",
+        "languageCode": "nl-NL"
+    },
+    {
+        "language": "Norwegian Bokmål",
+        "languageCode": "nb-NO"
+    },
+    {
+        "language": "Polish",
+        "languageCode": "pl-PL"
+    },
+    {
+        "language": "Portuguese",
+        "languageCode": "pt-BR"
+    },
+    {
+        "language": "Portuguese",
+        "languageCode": "pt-PT"
+    },
+    {
+        "language": "Romanian",
+        "languageCode": "ro-RO"
+    },
+    {
+        "language": "Slovak",
+        "languageCode": "sk-SK"
+    },
+    {
+        "language": "Finnish",
+        "languageCode": "fi-FI"
+    },
+    {
+        "language": "Swedish",
+        "languageCode": "sv-SE"
+    },
+    {
+        "language": "Turkish",
+        "languageCode": "tr-TR"
+    },
+    {
+        "language": "Bulgarian",
+        "languageCode": "bg-BG"
+    },
+    {
+        "language": "Russian",
+        "languageCode": "ru-RU"
+    },
+    {
+        "language": "Serbian",
+        "languageCode": "sr-RS"
+    },
+    {
+        "language": "Korean",
+        "languageCode": "ko-KR"
+    },
+    {
+        "language": "Chinese",
+        "languageCode": "cmn-Hans-CN"
+    },
+    {
+        "language": "Cantonese",
+        "languageCode": "yue-Hant-HK"
+    },
+    {
+        "language": "Japanese",
+        "languageCode": "ja-JP"
+    },
+    {
+        "language": "Latin",
+        "languageCode": "la"
+    }
+]
