@@ -28,7 +28,9 @@ function App() {
       alert("Please select a language")
     } else {
       if (listening) {
-        setListening(false)
+        setTimeout(() => {
+          setListening(false)
+        }, 500)
       } else {
         setListening(prevState => !prevState)
       }
@@ -123,6 +125,7 @@ function App() {
       translateText()
     }
   }, [transcript])
+
 
   //map translations onto output container
 
