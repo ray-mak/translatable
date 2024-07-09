@@ -30,7 +30,7 @@ h1 {
   color: var(--dark-blue);
 }
 
-.main-container > p {
+.main-container>p {
   color: var(--dark-gray)
 }
 
@@ -44,7 +44,7 @@ h1 {
   z-index: 1;
 }
 
-.selection-container > p {
+.selection-container>p {
   color: var(--light-gray);
   font-weight: 500;
   font-size: 1.125rem;
@@ -126,7 +126,7 @@ select {
   opacity: .6;
   font-size: .825rem;
   font-style: italic;
-  
+
 }
 
 .error {
@@ -168,7 +168,8 @@ select {
   width: 10px
 }
 
-.select-btn, .options li {
+.select-btn,
+.options li {
   display: flex;
   cursor: pointer;
   align-items: center;
@@ -176,7 +177,6 @@ select {
 
 .select-btn {
   height: 50px;
-  font-size: 1.125rem;
   padding: 0 16px;
   border-radius: 6px;
   justify-content: space-between;
@@ -205,7 +205,6 @@ select {
   height: 40px;
   border-radius: 6px;
   border: 1px solid var(--gray);
-  font-size: 1.125rem;
 }
 
 .options {
@@ -227,42 +226,27 @@ select {
   height: 40px;
   border-radius: 6px;
   padding: 0 16px;
-  font-size: 1.125rem;
 }
 
 .options li:hover {
   background-color: var(--light-gray);
 }
 
-@media screen and (max-width: 380px) {
-  .select-container {
-    width: 100px
+.content {
+  width: 240px
+}
+
+@media screen and (max-height: 800px) {
+  .button-container {
+    margin-top: 20px
   }
 
-  .selection-container {
-    padding: .75em
-  }
-
-  .selection-container > p {
-    margin-right: 0;
+  .output-container {
+    height: 50vh;
   }
 }
 
-@media screen and (max-width: 480px) {
-  .select-container {
-    width: 180px
-  }
-
-  .selection-container > p, .select-btn, .options > li, .search input {
-    font-size: 1rem;
-  }
-
-  .select-btn {
-    height: 40px
-  }
-}
-
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 640px) {
   .main-container {
     justify-content: flex-start;
     padding-top: 60px;
@@ -272,13 +256,21 @@ select {
     font-size: 1.8rem;
   }
 
+  .select-container {
+    width: 180px;
+  }
+
+  .content {
+    width: 180px
+  }
+
   .output-container {
     width: 100%;
     border-radius: 0;
     height: 55vh;
   }
 
-  .main-container > p {
+  .main-container>p {
     text-align: center;
   }
 
@@ -297,12 +289,42 @@ select {
   }
 }
 
-@media screen and (max-height: 800px) {
-  .button-container {
-    margin-top: 20px
+@media screen and (max-width: 480px) {
+  .select-container {
+    width: 150px
   }
 
-  .output-container {
-    height: 50vh;
+  .content {
+    width: 150px
+  }
+
+  .select-btn {
+    height: 32px
+  }
+
+  .options li {
+    height: 32px
+  }
+
+  .selection-container {
+    font-size: .75rem;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .select-container {
+    width: 120px
+  }
+
+  .content {
+    width: 120px
+  }
+
+  .selection-container {
+    padding: .75em
+  }
+
+  .selection-container>p {
+    margin-right: 0;
   }
 }

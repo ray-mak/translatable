@@ -24,7 +24,7 @@ function App() {
   //toggle listening
 
   function toggleListening() {
-    if (language === "Select Language") {
+    if (language === "Select Language" || inputLanguage === "Select Language") {
       alert("Please select a language")
     } else {
       if (listening) {
@@ -49,7 +49,7 @@ function App() {
   const recognition = new SpeechRecognition()
   recognition.continuous = false
   recognition.interimResults = true
-  recognition.lang = "en-US"
+  recognition.lang = inputLanguageCode
 
   useEffect(() => {
     let tempScript = []
@@ -95,7 +95,7 @@ function App() {
             messages: [
               {
                 "role": "system",
-                "content": `You will be provided with a sentence in English, and your task is to translate it into ${language}.`
+                "content": `You will be provided with a sentence in ${inputLanguage}, and your task is to translate it into ${language}.`
               },
               {
                 "role": "user",
