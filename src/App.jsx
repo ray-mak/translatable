@@ -9,6 +9,7 @@ import SyncLoader from "react-spinners/SyncLoader"
 import ScaleLoader from "react-spinners/ScaleLoader"
 import LanguageSelect from "./LanguageSelect"
 import LanguageInput from "./LanguageInput"
+import Typewriter from "./components/Typewriter"
 
 function App() {
   const [listening, setListening] = useState(false)
@@ -57,7 +58,9 @@ function App() {
     let tempScript = []
     function handleResult(e) {
       if (e.results[0].isFinal === true) {
-        tempScript.push(e.results[0][0].transcript)
+        const str = e.results[0][0].transcript
+        const newStr = str[0].toUpperCase() + str.slice(1)
+        tempScript.push(newStr)
         console.log(tempScript)
       }
     }
@@ -73,7 +76,7 @@ function App() {
 
     return () => {
       if (tempScript.length > 0) {
-        setTranscript(prevScript => [...prevScript, tempScript.join(", ")])
+        setTranscript(prevScript => [...prevScript, tempScript.join(". ")])
         setLoading(true)
       }
       recognition.removeEventListener('result', handleResult)
@@ -125,7 +128,7 @@ function App() {
 
   const translatedText = outputText.map((text, index) => {
     return <div className="text-container" key={index}>
-      <p className="english-text">{text.transcript}</p>
+      <p className="english-text"><Typewriter text={text.transcript} delay={100} /></p>
       <div className="divider"></div>
       <p className="translated-text">{text.translation}</p>
     </div>
@@ -153,16 +156,28 @@ function App() {
     setInputLanguageCode(languageCode)
   }
 
+  function keydownLanguage(language) {
+    setInputLanguage(language)
+  }
+
+  function keydownLanguageCode(languageCode) {
+    setInputLanguageCode(languageCode)
+  }
+
+  console.log(inputLanguageCode, inputLanguage)
+
   return (
     <div className="main-container">
       <h1>Translatable</h1>
-      <p>Transcribe and translate English to another language</p>
+      <p>Transcribe and translate your speech to another language</p>
       <div className="selection-container">
         {/* <p>English</p> */}
         <LanguageInput
           language={inputLanguage}
           selectInputLanguage={selectInputLanguage}
           selectInputLanguageCode={selectInputLanguageCode}
+          keydownLanguage={keydownLanguage}
+          keydownLanguageCode={keydownLanguageCode}
         />
         <FontAwesomeIcon icon={faRightLong} />
         <LanguageSelect
