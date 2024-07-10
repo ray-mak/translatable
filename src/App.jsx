@@ -10,6 +10,8 @@ import ScaleLoader from "react-spinners/ScaleLoader"
 import LanguageSelect from "./LanguageSelect"
 import LanguageInput from "./LanguageInput"
 import Typewriter from "./components/Typewriter"
+import InputLanguages from "./data/InputLanguages.json"
+import LanguagesList from "./data/LanguagesList.json"
 
 function App() {
   const [listening, setListening] = useState(false)
@@ -164,6 +166,16 @@ function App() {
     setInputLanguageCode(languageCode)
   }
 
+  //empty functions since language code is not necessary for Output languages
+  function selectInputLanguageCodeOutput() { }
+
+  function keydownLanguageOutput(language) {
+    setLanguage(language)
+  }
+
+  function keydownLanguageCodeOutput() {
+  }
+
   console.log(inputLanguageCode, inputLanguage)
 
   return (
@@ -174,15 +186,20 @@ function App() {
         {/* <p>English</p> */}
         <LanguageInput
           language={inputLanguage}
+          languageList={InputLanguages}
           selectInputLanguage={selectInputLanguage}
           selectInputLanguageCode={selectInputLanguageCode}
           keydownLanguage={keydownLanguage}
           keydownLanguageCode={keydownLanguageCode}
         />
         <FontAwesomeIcon icon={faRightLong} />
-        <LanguageSelect
+        <LanguageInput
           language={language}
-          handleClick={selectLanguage}
+          languageList={LanguagesList}
+          selectInputLanguage={selectLanguage}
+          selectInputLanguageCode={selectInputLanguageCodeOutput}
+          keydownLanguage={keydownLanguageOutput}
+          keydownLanguageCode={keydownLanguageCodeOutput}
         />
       </div>
       <div className="output-container" ref={outputContainerRef}>

@@ -2,11 +2,10 @@ import arrowdown from "/arrowdown.svg"
 import arrowup from "/arrowup.svg"
 import search from "/search.svg"
 import { useState, useEffect, useRef } from "react"
-import InputLanguages from "./data/InputLanguages.json"
 
 const LanguageInput = (props) => {
     const firstItemRef = useRef(null)
-    const languages = InputLanguages.map(language => {
+    const languages = props.languageList.map(language => {
         return (
             <li
                 onClick={(e) => {
