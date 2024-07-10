@@ -11,6 +11,8 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(corsOptions))
 
+app.use("/api/translate", require("./routes/translateRoutes"))
+
 app.use("/", express.static(path.join(__dirname, '/public')))
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

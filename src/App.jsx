@@ -88,26 +88,20 @@ function App() {
       async function translateText() {
         try {
           const text = transcript.slice(-1)
-          const openai = new OpenAI({
-            apiKey: import.meta.env.VITE_OPENAI_KEY,
-            dangerouslyAllowBrowser: true
+
+          const response = await fetch("http://localhost:3500/api/translate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              inputLanguage,
+              language,
+              text
+            })
           })
-          const data = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
-            messages: [
-              {
-                "role": "system",
-                "content": `You will be provided with a sentence in ${inputLanguage}, and your task is to translate it into ${language}.`
-              },
-              {
-                "role": "user",
-                "content": `${text}`
-              }
-            ],
-            temperature: 0.7,
-            max_tokens: 64,
-            top_p: 1,
-          })
+
+          const data = await response.json()
           console.log(data)
           console.log(data.choices[0].message.content)
           const translation = data.choices[0].message.content
