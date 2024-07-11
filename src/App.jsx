@@ -6,6 +6,7 @@ import microphoneOrange from "/microphone-orange.svg"
 import { useState, useEffect, useRef } from "react"
 import SyncLoader from "react-spinners/SyncLoader"
 import ScaleLoader from "react-spinners/ScaleLoader"
+import GridLoader from "react-spinners/GridLoader"
 import LanguageInput from "./components/LanguageInput"
 import InputLanguages from "./data/InputLanguages.json"
 import LanguagesList from "./data/LanguagesList.json"
@@ -19,7 +20,6 @@ function App() {
   const [inputLanguage, setInputLanguage] = useState("Select Language")
   const [inputLanguageCode, setInputLanguageCode] = useState("")
   const outputContainerRef = useRef(null)
-
 
   //toggle listening
 
@@ -173,59 +173,98 @@ function App() {
   function keydownLanguageCodeOutput() {
   }
 
+  //wake up Render server since it is on free tier
+  const [isLoading, setIsLoading] = useState(true)
 
-  return (
-    <div className="main-container">
-      <h1>Translatable</h1>
-      <p>Transcribe and translate your speech to another language</p>
-      <div className="selection-container">
-        {/* <p>English</p> */}
-        <LanguageInput
-          language={inputLanguage}
-          languageList={InputLanguages}
-          selectInputLanguage={selectInputLanguage}
-          selectInputLanguageCode={selectInputLanguageCode}
-          keydownLanguage={keydownLanguage}
-          keydownLanguageCode={keydownLanguageCode}
-        />
-        <FontAwesomeIcon icon={faRightLong} />
-        <LanguageInput
-          language={language}
-          languageList={LanguagesList}
-          selectInputLanguage={selectLanguage}
-          selectInputLanguageCode={selectInputLanguageCodeOutput}
-          keydownLanguage={keydownLanguageOutput}
-          keydownLanguageCode={keydownLanguageCodeOutput}
-        />
-      </div>
-      <div className="output-container" ref={outputContainerRef}>
-        {loading && <SyncLoader
-          color="#fca311"
-          style={{
-            position: "absolute",
-            top: "45%"
-          }}
-        />}
-        {translatedText}
-      </div>
+  useEffect(() => {
+    const wakeServer = async () => {
+      try {
+        const response = await fetch("https://translatable-api.onrender.com/api/translate")
+        if (response.ok) {
+          console.log("Server is awake")
+        } else {
+          console.error("Failed to wake up server")
+        }
+      } catch (error) {
+        console.error("Error: ", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-      <div className="button-container">
-        {listening && <ScaleLoader
-          color="#fca311"
-          style={{
-            position: "absolute",
-            top: "-80px",
-            left: "8px"
-          }}
-        />}
-        {listening && <p className="listening">Listening...</p>}
-        <button className="record-btn" type="button" aria-label="record audio" onClick={toggleListening}></button>
-        {!listening && <img className="microphone" src={microphoneWhite} alt="white microphone icon" />}
-        {listening && <img className="microphone" src={microphoneOrange} alt="orange microphone icon" />}
-      </div>
+    wakeServer()
+  }, [])
 
-    </div>
-  )
+  let content
+
+  if (isLoading) {
+    content = (
+      <div className="loading-screen">
+        <h1>Translatable</h1>
+        <div className="loading-div">
+          <GridLoader
+            color="#fca311"
+          />
+          <p>Server (free-tier) is asleep. Please give it a few moments to wake up.</p>
+        </div>
+      </div>
+    )
+  } else {
+    content = (
+      <div className="main-container">
+        <h1>Translatable</h1>
+        <p>Transcribe and translate your speech to another language</p>
+        <div className="selection-container">
+          {/* <p>English</p> */}
+          <LanguageInput
+            language={inputLanguage}
+            languageList={InputLanguages}
+            selectInputLanguage={selectInputLanguage}
+            selectInputLanguageCode={selectInputLanguageCode}
+            keydownLanguage={keydownLanguage}
+            keydownLanguageCode={keydownLanguageCode}
+          />
+          <FontAwesomeIcon icon={faRightLong} />
+          <LanguageInput
+            language={language}
+            languageList={LanguagesList}
+            selectInputLanguage={selectLanguage}
+            selectInputLanguageCode={selectInputLanguageCodeOutput}
+            keydownLanguage={keydownLanguageOutput}
+            keydownLanguageCode={keydownLanguageCodeOutput}
+          />
+        </div>
+        <div className="output-container" ref={outputContainerRef}>
+          {loading && <SyncLoader
+            color="#fca311"
+            style={{
+              position: "absolute",
+              top: "45%"
+            }}
+          />}
+          {translatedText}
+        </div>
+
+        <div className="button-container">
+          {listening && <ScaleLoader
+            color="#fca311"
+            style={{
+              position: "absolute",
+              top: "-80px",
+              left: "8px"
+            }}
+          />}
+          {listening && <p className="listening">Listening...</p>}
+          <button className="record-btn" type="button" aria-label="record audio" onClick={toggleListening}></button>
+          {!listening && <img className="microphone" src={microphoneWhite} alt="white microphone icon" />}
+          {listening && <img className="microphone" src={microphoneOrange} alt="orange microphone icon" />}
+        </div>
+
+      </div>
+    )
+  }
+
+  return content
 }
 
 export default App
