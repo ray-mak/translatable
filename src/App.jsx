@@ -3,13 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightLong } from '@fortawesome/free-solid-svg-icons'
 import microphoneWhite from "/microphone-white.svg"
 import microphoneOrange from "/microphone-orange.svg"
-import { useState, useEffect, useRef, CSSProperties } from "react"
-import { OpenAI } from "openai"
+import { useState, useEffect, useRef } from "react"
 import SyncLoader from "react-spinners/SyncLoader"
 import ScaleLoader from "react-spinners/ScaleLoader"
-import LanguageSelect from "./LanguageSelect"
-import LanguageInput from "./LanguageInput"
-import Typewriter from "./components/Typewriter"
+import LanguageInput from "./components/LanguageInput"
 import InputLanguages from "./data/InputLanguages.json"
 import LanguagesList from "./data/LanguagesList.json"
 
@@ -130,7 +127,7 @@ function App() {
 
   const translatedText = outputText.map((text, index) => {
     return <div className="text-container" key={index}>
-      <p className="english-text"><Typewriter text={text.transcript} delay={100} /></p>
+      <p className="english-text">{text.transcript}</p>
       <div className="divider"></div>
       <p className="translated-text">{text.translation}</p>
     </div>
@@ -176,7 +173,6 @@ function App() {
   function keydownLanguageCodeOutput() {
   }
 
-  console.log(inputLanguageCode, inputLanguage)
 
   return (
     <div className="main-container">

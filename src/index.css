@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Noto Sans", "Roboto", sans-serif;
 }
 
 :root {
@@ -101,6 +101,7 @@ select {
 
 .translated-text {
   color: var(--dark-blue);
+  font-weight: 500;
 }
 
 ::-webkit-scrollbar {
@@ -308,6 +309,10 @@ select {
 
   .selection-container {
     font-size: .75rem;
+  }
+
+  .button-container {
+    margin-top: 16px
   }
 }
 
