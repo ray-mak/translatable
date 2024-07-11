@@ -1,6 +1,13 @@
 const asyncHandler = require("express-async-handler")
 const { OpenAI } = require("openai")
 
+//@desc wake up Render server
+//@route GET /api/translate
+//@access Private
+const wakeServer = asyncHandler(async (req, res) => {
+    res.status(200).json("Server is up!")
+})
+
 //@desc get translation
 //@route POST /api/translate
 //@access Private
@@ -32,5 +39,6 @@ const getTranslation = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
+    wakeServer,
     getTranslation
 } 
