@@ -91,7 +91,7 @@ function App() {
         try {
           const text = transcript.slice(-1)
 
-          const response = await fetch("https://translatable-api.onrender.com", {
+          const response = await fetch("https://translatable-api.onrender.com/api/translate", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
