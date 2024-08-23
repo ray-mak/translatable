@@ -1,6 +1,6 @@
 import React from "react"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRightLong } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faRightLong } from "@fortawesome/free-solid-svg-icons"
 import microphoneWhite from "/microphone-white.svg"
 import microphoneOrange from "/microphone-orange.svg"
 import { useState, useEffect, useRef } from "react"
@@ -32,7 +32,7 @@ function App() {
           setListening(false)
         }, 500)
       } else {
-        setListening(prevState => !prevState)
+        setListening((prevState) => !prevState)
       }
     }
   }
@@ -47,7 +47,8 @@ function App() {
 
   //set up voice recognition
 
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition
   const recognition = new SpeechRecognition()
   recognition.continuous = false
   recognition.interimResults = true
@@ -70,16 +71,16 @@ function App() {
       }
     }
 
-    recognition.addEventListener('result', handleResult)
-    recognition.addEventListener('end', handleEnd)
+    recognition.addEventListener("result", handleResult)
+    recognition.addEventListener("end", handleEnd)
 
     return () => {
       if (tempScript.length > 0) {
-        setTranscript(prevScript => [...prevScript, tempScript.join(". ")])
+        setTranscript((prevScript) => [...prevScript, tempScript.join(". ")])
         setLoading(true)
       }
-      recognition.removeEventListener('result', handleResult)
-      recognition.removeEventListener('end', handleEnd)
+      recognition.removeEventListener("result", handleResult)
+      recognition.removeEventListener("end", handleEnd)
     }
   }, [listening])
 
@@ -91,28 +92,34 @@ function App() {
         try {
           const text = transcript.slice(-1)
 
-          const response = await fetch("https://translatable-api.onrender.com/api/translate", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              inputLanguage,
-              language,
-              text
-            })
-          })
+          const response = await fetch(
+            "https://translatable-api.onrender.com/api/translate",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                inputLanguage,
+                language,
+                text,
+              }),
+            }
+          )
 
           const data = await response.json()
           console.log(data)
           console.log(data.choices[0].message.content)
           const translation = data.choices[0].message.content
-          setOutputText(prevText => {
+          setOutputText((prevText) => {
             setLoading(false)
-            return [...prevText, {
-              "transcript": text,
-              "translation": translation
-            }]
+            return [
+              ...prevText,
+              {
+                transcript: text,
+                translation: translation,
+              },
+            ]
           })
         } catch (error) {
           console.error("Error occurred in translation: ", error)
@@ -122,22 +129,24 @@ function App() {
     }
   }, [transcript])
 
-
   //map translations onto output container
 
   const translatedText = outputText.map((text, index) => {
-    return <div className="text-container" key={index}>
-      <p className="english-text">{text.transcript}</p>
-      <div className="divider"></div>
-      <p className="translated-text">{text.translation}</p>
-    </div>
+    return (
+      <div className="text-container" key={index}>
+        <p className="english-text">{text.transcript}</p>
+        <div className="divider"></div>
+        <p className="translated-text">{text.translation}</p>
+      </div>
+    )
   })
 
   //scroll output container when new translation is added
 
   useEffect(() => {
     if (outputContainerRef.current) {
-      outputContainerRef.current.scrollTop = outputContainerRef.current.scrollHeight
+      outputContainerRef.current.scrollTop =
+        outputContainerRef.current.scrollHeight
     }
   }, [outputText])
 
@@ -164,14 +173,13 @@ function App() {
   }
 
   //empty functions since language code is not necessary for Output languages
-  function selectInputLanguageCodeOutput() { }
+  function selectInputLanguageCodeOutput() {}
 
   function keydownLanguageOutput(language) {
     setLanguage(language)
   }
 
-  function keydownLanguageCodeOutput() {
-  }
+  function keydownLanguageCodeOutput() {}
 
   //wake up Render server since it is on free tier
   const [isLoading, setIsLoading] = useState(true)
@@ -179,7 +187,9 @@ function App() {
   useEffect(() => {
     const wakeServer = async () => {
       try {
-        const response = await fetch("https://translatable-api.onrender.com/api/translate")
+        const response = await fetch(
+          "https://translatable-api.onrender.com/api/translate"
+        )
         if (response.ok) {
           console.log("Server is awake")
         } else {
@@ -202,10 +212,11 @@ function App() {
       <div className="loading-screen">
         <h1>Translatable</h1>
         <div className="loading-div">
-          <GridLoader
-            color="#fca311"
-          />
-          <p>Server (free-tier) is asleep. Please give it a few moments to wake up.</p>
+          <GridLoader color="#fca311" />
+          <p>
+            Server (free-tier) is asleep. Please give it a few moments to wake
+            up.
+          </p>
         </div>
       </div>
     )
@@ -235,31 +246,51 @@ function App() {
           />
         </div>
         <div className="output-container" ref={outputContainerRef}>
-          {loading && <SyncLoader
-            color="#fca311"
-            style={{
-              position: "absolute",
-              top: "45%"
-            }}
-          />}
+          {loading && (
+            <SyncLoader
+              color="#fca311"
+              style={{
+                position: "absolute",
+                top: "45%",
+              }}
+            />
+          )}
           {translatedText}
         </div>
 
         <div className="button-container">
-          {listening && <ScaleLoader
-            color="#fca311"
-            style={{
-              position: "absolute",
-              top: "-80px",
-              left: "8px"
-            }}
-          />}
+          {listening && (
+            <ScaleLoader
+              color="#fca311"
+              style={{
+                position: "absolute",
+                top: "-80px",
+                left: "8px",
+              }}
+            />
+          )}
           {listening && <p className="listening">Listening...</p>}
-          <button className="record-btn" type="button" aria-label="record audio" onClick={toggleListening}></button>
-          {!listening && <img className="microphone" src={microphoneWhite} alt="white microphone icon" />}
-          {listening && <img className="microphone" src={microphoneOrange} alt="orange microphone icon" />}
+          <button
+            className="record-btn"
+            type="button"
+            aria-label="record audio"
+            onClick={toggleListening}
+          ></button>
+          {!listening && (
+            <img
+              className="microphone"
+              src={microphoneWhite}
+              alt="white microphone icon"
+            />
+          )}
+          {listening && (
+            <img
+              className="microphone"
+              src={microphoneOrange}
+              alt="orange microphone icon"
+            />
+          )}
         </div>
-
       </div>
     )
   }
